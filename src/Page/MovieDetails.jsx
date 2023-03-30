@@ -3,15 +3,9 @@ import { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
-import {
-  BackButton,
-  Link,
-  AddInfWrapper,
-  AddInfTitle,
-} from './MovieDetailsStyle';
 import { MovieInfo } from 'modules/MovieDetails/MovieInfo/MovieInfo';
 import { status } from 'constants';
+import { AddInformation } from 'modules/MovieDetails/AddInformation/AddInformation';
 
 const { PENDING, IDLE, REJECTED, RESOLVED } = status;
 
@@ -20,8 +14,13 @@ export function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [status, setStatus] = useState(IDLE);
+  const backHref = location.state?.from ? location.state.from : '/movies';
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
+
     setStatus(PENDING);
 
     API.fetchMovieById(id)
@@ -37,19 +36,9 @@ export function MovieDetails() {
 
   return (
     <>
-      <NavLink to={location.state.from}>
-        <BackButton type="button">Go back</BackButton>
-      </NavLink>
+
       <MovieInfo movie={movie} status={status} />
-      <AddInfWrapper>
-        <AddInfTitle>Additional information</AddInfTitle>
-        <Link to="cast" state={{ from: location.state.from }}>
-          Cast
-        </Link>
-        <Link to="reviews" state={{ from: location.state.from }}>
-          Reviews
-        </Link>
-      </AddInfWrapper>
+      <AddInformation backHref={backHref} />
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>

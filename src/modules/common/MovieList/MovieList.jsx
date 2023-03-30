@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link,  useLocation } from 'react-router-dom';
 import { MovieItem, MovieListStyle } from './MovieListStyle';
 import { status } from 'constants';
 import { Loader } from '../Loader/Loader';
