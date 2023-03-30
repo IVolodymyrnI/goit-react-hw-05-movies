@@ -6,6 +6,7 @@ import { Outlet } from 'react-router-dom';
 import { MovieInfo } from 'modules/MovieDetails/MovieInfo/MovieInfo';
 import { status } from 'constants';
 import { AddInformation } from 'modules/MovieDetails/AddInformation/AddInformation';
+import { BackButton } from 'modules/MovieDetails/AddInformation/AddInformationStyle';
 
 const { PENDING, IDLE, REJECTED, RESOLVED } = status;
 
@@ -36,7 +37,7 @@ export function MovieDetails() {
 
   return (
     <>
-
+      <BackButton backHref={backHref} />
       <MovieInfo movie={movie} status={status} />
       <AddInformation backHref={backHref} />
       <Suspense fallback={<div>Loading...</div>}>
