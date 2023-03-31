@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
@@ -10,16 +10,16 @@ import { BackButton } from 'modules/MovieDetails/BackButton/BackButton';
 export function MovieDetails() {
   const location = useLocation();
   const { id } = useParams();
-  const { data: movie, status } = useFetchMovie({
+  const { data: movie, ...status } = useFetchMovie({
     url: `/movie/${id}`,
   });
-  const backHref = location.state?.from ? location.state.from : '/movies';
+  const backHref = useRef(location.state?.from ?? '/movies');
 
   return (
     <>
       <BackButton backHref={backHref} />
       <MovieInfo movie={movie} status={status} />
-      <AddInformation backHref={backHref} />
+      <AddInformation />
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>

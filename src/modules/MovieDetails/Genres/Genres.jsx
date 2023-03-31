@@ -1,4 +1,5 @@
 import { GenreList, GenreItem } from './GenresStyle';
+import PropTypes from 'prop-types';
 
 export function Genres({ genreList }) {
   return (
@@ -9,3 +10,12 @@ export function Genres({ genreList }) {
     </GenreList>
   );
 }
+
+Genres.propTypes = {
+  genreList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+};

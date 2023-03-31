@@ -1,10 +1,8 @@
 import { useFetchMovie } from 'hooks';
 import { MovieList } from 'modules/common/MovieList/MovieList';
 
-const popular = '/trending/movie/day';
-
 export function Home() {
-  const { data, status } = useFetchMovie({ url: popular });
+  const { data, status } = useFetchMovie({ url: '/trending/movie/day' });
   const movies = data?.results || [];
 
 	return (

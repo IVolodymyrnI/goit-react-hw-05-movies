@@ -1,13 +1,11 @@
+import PropTypes from 'prop-types';
 import { Genres } from '../Genres/Genres';
 import { InfoWrapper, Poster } from './MovieInfoStyle';
 import { BASE_IMG_URL } from 'constants/baseImgUrl';
-import { status } from 'constants';
 import { MovieInfoSkelet } from 'modules/MovieDetails/MovieInfoSkelet/MovieInfoSkelet';
 
-const { RESOLVED } = status;
-
-export function MovieInfo({ movie, status }) {
-  if (status !== RESOLVED) {
+export function MovieInfo({ movie, status: { isResolved } }) {
+  if (!isResolved) {
     return <MovieInfoSkelet />;
   }
 
@@ -41,3 +39,23 @@ export function MovieInfo({ movie, status }) {
     </InfoWrapper>
   );
 }
+
+MovieInfo.propTypes = {
+  movie: PropTypes.oneOfType([
+    PropTypes.shape({
+      original_title: PropTypes.string.isRequired,
+      overview: PropTypes.string.isRequired,
+      genres: PropTypes.array.isRequired,
+      poster_path: PropTypes.string.isRequired,
+      release_date: PropTypes.string.isRequired,
+      vote_average: PropTypes.number.isRequired,
+    }),
+    PropTypes.shape({}),
+  ]),
+  status: PropTypes.shape({
+    isPending: PropTypes.bool.isRequired,
+    isRejected: PropTypes.bool.isRequired,
+    isResolved: PropTypes.bool.isRequired,
+    isIdle: PropTypes.bool.isRequired,
+  }),
+};

@@ -1,14 +1,15 @@
-import { Link,  useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MovieItem, MovieListStyle } from './MovieListStyle';
-import { status } from 'constants';
 import { Loader } from '../Loader/Loader';
+import { PropTypes } from 'prop-types';
+import { status } from 'constants';
 
-const { RESOLVED, IDLE, REJECTED, PENDING } = status;
+const { PENDING, IDLE, REJECTED, RESOLVED } = status;
 
 export function MovieList({ moviesList, status }) {
   const location = useLocation();
 
-  if ([REJECTED, IDLE].includes(status)) {
+  if ([IDLE, REJECTED].status) {
     return null;
   }
 
@@ -30,3 +31,18 @@ export function MovieList({ moviesList, status }) {
     );
   }
 }
+
+MovieList.propTypes = {
+  moviesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      original_title: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+    })
+  ),
+  status: PropTypes.shape({
+    isPending: PropTypes.bool.isRequired,
+    isRejected: PropTypes.bool.isRequired,
+    isResolved: PropTypes.bool.isRequired,
+    isIdle: PropTypes.bool.isRequired,
+  }),
+};

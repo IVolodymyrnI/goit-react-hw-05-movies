@@ -5,20 +5,16 @@ import { Form, Button } from './SearchFormStyle';
 export function SearchForm() {
   const [params, setParams] = useSearchParams();
   const { register, handleSubmit } = useForm();
-  const query = params.get('name');
-
-  function onSubmit(query) {
-    setParams(query);
-  }
+  const query = params.get('query');
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(setParams)}>
       <label htmlFor="movie-name"></label>
       <input
         type="text"
         id="movie-name"
         defaultValue={query}
-        {...register('name')}
+        {...register('query')}
       />
       <Button type="submit">Search</Button>
     </Form>

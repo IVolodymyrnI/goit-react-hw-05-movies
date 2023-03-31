@@ -1,15 +1,11 @@
 import { Link, AddInfWrapper, AddInfTitle } from './AddInformationStyle';
 
-export function AddInformation({ backHref }) {
+export function AddInformation() {
   return (
     <AddInfWrapper>
       <AddInfTitle>Additional information</AddInfTitle>
-      <Link to="cast" state={{ from: backHref }}>
-        Cast
-      </Link>
-      <Link to="reviews" state={{ from: backHref }}>
-        Reviews
-      </Link>
+      <Link to="cast">Cast</Link>
+      <Link to="reviews">Reviews</Link>
     </AddInfWrapper>
   );
 }
