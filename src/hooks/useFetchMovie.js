@@ -4,9 +4,14 @@ import { useState, useEffect } from 'react';
 
 const { PENDING, IDLE, REJECTED, RESOLVED } = status;
 
-export const useFetchMovie = ({ url = '', query = null } = {}) => {
-  const [data, setData] = useState(null);
+export const useFetchMovie = ({ url = '', query = null }) => {
+  const [data, setState] = useState({});
   const [status, setStatus] = useState(IDLE);
+
+  const isPending = status === PENDING;
+  const isIdle = status === IDLE;
+  const isRejected = status === REJECTED;
+  const isResolved = status === RESOLVED;
 
   useEffect(() => {
     if (query === '') {
@@ -14,7 +19,7 @@ export const useFetchMovie = ({ url = '', query = null } = {}) => {
     }
     const params = {
       api_key: '82a1cc43eb07cca0624de05248811f1a',
-      query: query,
+      query,
     };
 
     let controller = new AbortController();
@@ -27,7 +32,7 @@ export const useFetchMovie = ({ url = '', query = null } = {}) => {
       })
       .then(r => {
         setStatus(RESOLVED);
-        setData(r.data);
+        setState(r.data);
       })
       .catch(error => {
         setStatus(REJECTED);
@@ -36,7 +41,5 @@ export const useFetchMovie = ({ url = '', query = null } = {}) => {
     return () => controller?.abort();
   }, [query, url]);
 
-  if (!data) return { status };
-
-  return { data, status };
+  return { data, isIdle, isPending, isRejected, isResolved };
 };

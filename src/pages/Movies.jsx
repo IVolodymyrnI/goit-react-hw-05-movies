@@ -5,7 +5,7 @@ import { useFetchMovie } from 'hooks';
 
 export default function Movies() {
   const [params] = useSearchParams();
-  const { data, status } = useFetchMovie({
+  const { data, ...status } = useFetchMovie({
     url: '/search/movie',
     query: params.get('query') || '',
 	});

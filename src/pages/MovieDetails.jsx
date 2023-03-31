@@ -7,7 +7,7 @@ import { MovieInfo } from 'modules/MovieDetails/MovieInfo/MovieInfo';
 import { AddInformation } from 'modules/MovieDetails/AddInformation/AddInformation';
 import { BackButton } from 'modules/MovieDetails/BackButton/BackButton';
 
-export function MovieDetails() {
+export default function MovieDetails() {
   const location = useLocation();
   const { id } = useParams();
   const { data: movie, ...status } = useFetchMovie({

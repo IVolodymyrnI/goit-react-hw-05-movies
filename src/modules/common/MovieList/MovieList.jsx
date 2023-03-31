@@ -2,22 +2,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { MovieItem, MovieListStyle } from './MovieListStyle';
 import { Loader } from '../Loader/Loader';
 import { PropTypes } from 'prop-types';
-import { status } from 'constants';
-
-const { PENDING, IDLE, REJECTED, RESOLVED } = status;
 
 export function MovieList({ moviesList, status }) {
+  const { isIdle, isPending, isRejected, isResolved } = status;
   const location = useLocation();
 
-  if ([IDLE, REJECTED].status) {
+  if (isIdle || isRejected) {
     return null;
   }
 
-  if (status === PENDING) {
+  if (isPending) {
     return <Loader />;
   }
 
-  if (status === RESOLVED) {
+  if (isResolved) {
     return (
       <MovieListStyle>
         {moviesList.map(({ original_title, id }) => (
