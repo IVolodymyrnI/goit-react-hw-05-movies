@@ -1,40 +1,31 @@
-import { API } from 'API/API';
-import { useEffect, useState } from 'react';
+import { useFetchMovie } from 'hooks';
 import { useParams } from 'react-router-dom';
 import { Author, ReviewItem, Content } from './ReviewsStyle';
 
 export default function Reviews() {
   const { id } = useParams();
-  const [review, setReview] = useState('');
-  const shortedReviewArray = review.slice(0, 20);
-  const isReviewEmpty = review.length === 0;
-
-  useEffect(() => {
-    API.fetchMovieReviewById(id).then(r => setReview(r.data.results));
-  }, [id]);
-
-  if (!review) {
-    return null;
-  }
+  const { data } = useFetchMovie({
+    url: `/movie/${id}/reviews`,
+  });
+  const reviews = data?.results || [];
+  const isReviewEmpty = reviews.length < 1;
 
   if (isReviewEmpty) {
     return <p>We don't have any review for this movie.</p>;
   }
 
-  if (!isReviewEmpty) {
-    return (
-      <div>
-        {shortedReviewArray.map(({ content, author, id }) => {
-          return (
-            <ReviewItem key={id}>
-              <Author>
-                <b>Author</b>: {author}
-              </Author>
-              <Content>{content}</Content>
-            </ReviewItem>
-          );
-        })}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {reviews.map(({ content, author, id }) => {
+        return (
+          <ReviewItem key={id}>
+            <Author>
+              <b>Author</b>: {author}
+            </Author>
+            <Content>{content}</Content>
+          </ReviewItem>
+        );
+      })}
+    </div>
+  );
 }

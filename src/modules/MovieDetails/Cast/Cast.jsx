@@ -1,31 +1,24 @@
-import { API } from 'API/API';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Photo, Name, Character, CastItem } from './CastStyle';
 import NoProfilePhoto from 'img/NoProfilePhoto.jpg';
 import { BASE_IMG_URL } from 'constants/baseImgUrl';
+import { useFetchMovie } from 'hooks';
 
 export default function Cast() {
   const { id } = useParams();
-  const [cast, setCast] = useState('');
-  const shortedCast = cast.slice(0, 20);
-
-  useEffect(() => {
-    API.fetchMovieCastById(id).then(r => setCast(r.data.cast));
-  }, [id]);
-
-  if (!cast) {
-    return null;
-  }
+  const { data } = useFetchMovie({
+    url: `/movie/${id}/credits`,
+  });
+  const cast = data?.cast || [];
 
   return (
     <ul>
-      {shortedCast.map(({ character, name, profile_path, cast_id }) => {
+      {cast.map(({ character, name, profile_path, cast_id }) => {
         const hasActorPhoto = profile_path
           ? BASE_IMG_URL + profile_path
           : NoProfilePhoto;
 
-				return (
+        return (
           <CastItem key={cast_id}>
             <Photo src={hasActorPhoto} alt="" width={70} />
             <Name>{name}</Name>

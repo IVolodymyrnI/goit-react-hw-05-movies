@@ -1,39 +1,19 @@
-import { API } from 'API/API';
 import { Suspense } from 'react';
-import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import { MovieInfo } from 'modules/MovieDetails/MovieInfo/MovieInfo';
-import { status } from 'constants';
-import { AddInformation } from 'modules/MovieDetails/AddInformation/AddInformation';
-import { BackButton } from 'modules/MovieDetails/AddInformation/AddInformationStyle';
 
-const { PENDING, IDLE, REJECTED, RESOLVED } = status;
+import { useFetchMovie } from 'hooks';
+import { MovieInfo } from 'modules/MovieDetails/MovieInfo/MovieInfo';
+import { AddInformation } from 'modules/MovieDetails/AddInformation/AddInformation';
+import { BackButton } from 'modules/MovieDetails/BackButton/BackButton';
 
 export function MovieDetails() {
   const location = useLocation();
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
-  const [status, setStatus] = useState(IDLE);
+  const { data: movie, status } = useFetchMovie({
+    url: `/movie/${id}`,
+  });
   const backHref = location.state?.from ? location.state.from : '/movies';
-
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-
-    setStatus(PENDING);
-
-    API.fetchMovieById(id)
-      .then(r => {
-        setMovie(r.data);
-        setStatus(RESOLVED);
-      })
-      .catch(error => {
-        setStatus(REJECTED);
-        console.log(error.message);
-      });
-  }, [id]);
 
   return (
     <>
