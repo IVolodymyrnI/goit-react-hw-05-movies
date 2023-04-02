@@ -1,5 +1,5 @@
 import { useFetchMovie } from 'hooks';
-import { MovieList } from 'modules/common/MovieList/MovieList';
+import { MovieList } from 'routes/common/MovieList/MovieList';
 
 export function Home() {
   const { data, ...status } = useFetchMovie({ url: '/trending/movie/day' });

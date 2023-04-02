@@ -3,9 +3,9 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 import { useFetchMovie } from 'hooks';
-import { MovieInfo } from 'modules/MovieDetails/MovieInfo/MovieInfo';
-import { AddInformation } from 'modules/MovieDetails/AddInformation/AddInformation';
-import { BackButton } from 'modules/MovieDetails/BackButton/BackButton';
+import { MovieInfo } from 'routes/MovieDetails/MovieInfo/MovieInfo';
+import { AddInformation } from 'routes/MovieDetails/AddInformation/AddInformation';
+import { BackButton } from 'routes/MovieDetails/BackButton/BackButton';
 
 export default function MovieDetails() {
   const location = useLocation();

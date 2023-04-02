@@ -1,5 +1,5 @@
-import { MovieList } from 'modules/common/MovieList/MovieList';
-import { SearchForm } from 'modules/Movies/SearchForm/SearchForm';
+import { MovieList } from 'routes/common/MovieList/MovieList';
+import { SearchForm } from 'routes/Movies/SearchForm/SearchForm';
 import { useSearchParams } from 'react-router-dom';
 import { useFetchMovie } from 'hooks';
 

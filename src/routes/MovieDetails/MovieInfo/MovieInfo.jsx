@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Genres } from '../Genres/Genres';
 import { InfoWrapper, Poster } from './MovieInfoStyle';
 import { BASE_IMG_URL } from 'constants/baseImgUrl';
-import { MovieInfoSkelet } from 'modules/MovieDetails/MovieInfoSkelet/MovieInfoSkelet';
+import { MovieInfoSkelet } from 'routes/MovieDetails/MovieInfoSkelet/MovieInfoSkelet';
 
 export function MovieInfo({ movie, status: { isResolved } }) {
   if (!isResolved) {
